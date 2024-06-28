@@ -33,20 +33,23 @@
     <script>
         // Your Firebase configuration
         const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT_ID.appspot.com",
-            messagingSenderId: "YOUR_SENDER_ID",
-            appId: "YOUR_APP_ID"
+            apiKey: "AIzaSyDKwNuGjMALW37sckAJ33le_seRSaQln-g",
+            authDomain: "photo-voting-d2d0c.firebaseapp.com",
+            projectId: "photo-voting-d2d0c",
+            storageBucket: "photo-voting-d2d0c.appspot.com",
+            messagingSenderId: "157550421554",
+            appId: "1:157550421554:web:0f761ac413ca77476b7e2b"
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
         const photos = [
-            'URL_OF_PHOTO_1',
-            'URL_OF_PHOTO_2',
+            https://drive.google.com/file/d/1_U67YVaYnRkFiZrqok_5D-_2S2_kBdOc/view?usp=drive_link ,
+            https://drive.google.com/file/d/1bACWW1BdAhGhqxbpMbvEyfFiBdohHyE8/view?usp=drive_link ,
+        https://drive.google.com/file/d/1ebKyWYwi3UuOqoXUKN1E3hkMLK1sWfcQ/view?usp=drive_link ,
+        https://drive.google.com/file/d/1oBYIR4KNZfGr1GHqYoCGBEVbUJKB9sWl/view?usp=drive_link 
+        
             // Add URLs for all 80 photos
         ];
         let shuffledPhotos = [];
