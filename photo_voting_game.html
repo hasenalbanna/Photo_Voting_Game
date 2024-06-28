@@ -21,45 +21,42 @@
 </head>
 <body>
     <h1>Photo Voting Game</h1>
-   <div id="user-form">
-    <label for="username">Enter your name:</label>
-    <input type="text" id="username" name="username" required>
-    <button type="button" onclick="startGame()">Start Game</button>
-</div>
+    <div id="user-form">
+        <label for="username">Enter your name:</label>
+        <input type="text" id="username" name="username" required>
+        <button type="button" onclick="startGame()">Start Game</button>
+    </div>
 
     <div id="game-container" class="container" style="display:none;">
         <img id="photo1" class="photo" src="" alt="Photo 1">
         <img id="photo2" class="photo" src="" alt="Photo 2">
     </div>
-   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
-<script>
-    // Firebase configuration and initialization
-    const firebaseConfig = {
-        apiKey: "AIzaSyDKwNuGjMALW37sckAJ33le_seRSaQln-g",
-        authDomain: "photo-voting-d2d0c.firebaseapp.com",
-        projectId: "photo-voting-d2d0c",
-        storageBucket: "photo-voting-d2d0c.appspot.com",
-        messagingSenderId: "157550421554",
-        appId: "1:157550421554:web:0f761ac413ca77476b7e2b"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
 
-    // Rest of your game logic
-    // Ensure Firebase initialization is completed before interacting with Firestore
-</script>
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDKwNuGjMALW37sckAJ33le_seRSaQln-g",
+  authDomain: "photo-voting-d2d0c.firebaseapp.com",
+  projectId: "photo-voting-d2d0c",
+  storageBucket: "photo-voting-d2d0c.appspot.com",
+  messagingSenderId: "157550421554",
+  appId: "1:157550421554:web:0f761ac413ca77476b7e2b",
+        };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
 
+        // Game variables
         const photos = [
+            const photos = [
             'https://drive.google.com/file/d/1_U67YVaYnRkFiZrqok_5D-_2S2_kBdOc/view?usp=drive_link ',
             'https://drive.google.com/file/d/1bACWW1BdAhGhqxbpMbvEyfFiBdohHyE8/view?usp=drive_link ',
            ' https://drive.google.com/file/d/1ebKyWYwi3UuOqoXUKN1E3hkMLK1sWfcQ/view?usp=drive_link ',
             // Add URLs for all 80 photos
         ];
+            // Add URLs for all 80 photos
+        ];
         let shuffledPhotos = [];
         let currentIndex = 0;
         let userName = '';
@@ -81,16 +78,19 @@ const analytics = getAnalytics(app);
             document.getElementById('photo2').src = shuffledPhotos[currentIndex + 1];
         }
 
-        document.getElementById('photo1').addEventListener('click', function() {
-            votePhoto(shuffledPhotos[currentIndex]);
-            currentIndex++;
-            showPhotos();
-        });
+        // Event listeners for photo clicks
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('photo1').addEventListener('click', function() {
+                votePhoto(shuffledPhotos[currentIndex]);
+                currentIndex++;
+                showPhotos();
+            });
 
-        document.getElementById('photo2').addEventListener('click', function() {
-            votePhoto(shuffledPhotos[currentIndex + 1]);
-            currentIndex++;
-            showPhotos();
+            document.getElementById('photo2').addEventListener('click', function() {
+                votePhoto(shuffledPhotos[currentIndex + 1]);
+                currentIndex++;
+                showPhotos();
+            });
         });
 
         function votePhoto(photo) {
