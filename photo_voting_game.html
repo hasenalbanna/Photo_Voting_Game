@@ -21,41 +21,44 @@
 </head>
 <body>
     <h1>Photo Voting Game</h1>
-    <form id="user-form">
-        <label for="username">Enter your name:</label>
-        <input type="text" id="username" name="username" required>
-        <button type="submit">Start Game</button>
-    
+    <div id="game-container" class="container" style="display:none;">
+        <img id="photo1" class="photo" src="" alt="Photo 1">
+        <img id="photo2" class="photo" src="" alt="Photo 2">
+    </div>
     <script>
-        // Your Firebase configuration
-        const firebaseConfig = {
-        apiKey: "AIzaSyDKwNuGjMALW37sckAJ33le_seRSaQln-g",
+        // Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyDKwNuGjMALW37sckAJ33le_seRSaQln-g",
   authDomain: "photo-voting-d2d0c.firebaseapp.com",
   projectId: "photo-voting-d2d0c",
   storageBucket: "photo-voting-d2d0c.appspot.com",
   messagingSenderId: "157550421554",
   appId: "1:157550421554:web:0f761ac413ca77476b7e2b",
   measurementId: "G-ZLMC6EGDP3"
-  };
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
         const photos = [
-            'URL_OF_PHOTO_1',
-            'URL_OF_PHOTO_2',
+            'https://drive.google.com/file/d/1_U67YVaYnRkFiZrqok_5D-_2S2_kBdOc/view?usp=drive_link ',
+            'https://drive.google.com/file/d/1bACWW1BdAhGhqxbpMbvEyfFiBdohHyE8/view?usp=drive_link ',
+           ' https://drive.google.com/file/d/1ebKyWYwi3UuOqoXUKN1E3hkMLK1sWfcQ/view?usp=drive_link ',
             // Add URLs for all 80 photos
         ];
         let shuffledPhotos = [];
         let currentIndex = 0;
-        let userName = '';
 
-        document.getElementById('user-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            userName = document.getElementById('username').value;
+        document.addEventListener('DOMContentLoaded', function() {
             shuffledPhotos = photos.sort(() => 0.5 - Math.random());
-            currentIndex = 0;
-            document.getElementById('user-form').style.display = 'none';
             document.getElementById('game-container').style.display = 'flex';
             showPhotos();
         });
@@ -82,4 +85,18 @@
         });
 
         function votePhoto(photo) {
-            db.collection
+            db.collection("votes").add({
+                user: "Anonymous", // Hardcode as anonymous since no login
+                photo: photo,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            })
+            .then(() => {
+                console.log("Vote successfully recorded!");
+            })
+            .catch((error) => {
+                console.error("Error recording vote: ", error);
+            });
+        }
+    </script>
+</body>
+</html>
