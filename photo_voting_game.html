@@ -21,12 +21,18 @@
 </head>
 <body>
     <h1>Photo Voting Game</h1>
+    <div id="user-form">
+        <label for="username">Enter your name:</label>
+        <input type="text" id="username" name="username" required>
+        <button type="button" onclick="startGame()">Start Game</button>
+    </div>
     <div id="game-container" class="container" style="display:none;">
         <img id="photo1" class="photo" src="" alt="Photo 1">
         <img id="photo2" class="photo" src="" alt="Photo 2">
     </div>
     <script>
-        // Import the functions you need from the SDKs you need
+        // Your Firebase configuration
+       // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -53,15 +59,18 @@ const analytics = getAnalytics(app);
             'https://drive.google.com/file/d/1bACWW1BdAhGhqxbpMbvEyfFiBdohHyE8/view?usp=drive_link ',
            ' https://drive.google.com/file/d/1ebKyWYwi3UuOqoXUKN1E3hkMLK1sWfcQ/view?usp=drive_link ',
             // Add URLs for all 80 photos
-        ];
+        ];
         let shuffledPhotos = [];
         let currentIndex = 0;
+        let userName = '';
 
-        document.addEventListener('DOMContentLoaded', function() {
+        function startGame() {
+            userName = document.getElementById('username').value;
             shuffledPhotos = photos.sort(() => 0.5 - Math.random());
+            document.getElementById('user-form').style.display = 'none';
             document.getElementById('game-container').style.display = 'flex';
             showPhotos();
-        });
+        }
 
         function showPhotos() {
             if (currentIndex >= shuffledPhotos.length - 1) {
@@ -86,7 +95,7 @@ const analytics = getAnalytics(app);
 
         function votePhoto(photo) {
             db.collection("votes").add({
-                user: "Anonymous", // Hardcode as anonymous since no login
+                user: userName,
                 photo: photo,
                 timestamp: firebase.firestore.FieldValue.serverTimestamp()
             })
